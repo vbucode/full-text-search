@@ -1,4 +1,5 @@
 import json
+from collections import Counter
 from words import Words
 from stem import Stemming
 import corpus
@@ -38,12 +39,16 @@ for i in dlist:
                 if j in k:
                     triallist.append(dlist.index(k))
             memo[j] = triallist
+while True:
+    nlist = []
+    klist = []
+    inp =input("text:")
+    t = tokenize(inp)
+    for i in t:
+        if i in memo.keys():
+            nlist.append(memo[i])
 
-inp =input("text:")
-t = tokenize(inp)
-for i in t:
-    if i in memo.keys():
-        print(memo[i])
-    else:
-        print("not exist!")
-    
+    for i in nlist:
+        for j in i:
+            klist.append(j)
+    print(dlist[max(set(klist), key = lambda x: klist.count(x))])
