@@ -1,5 +1,4 @@
 import json
-from collections import Counter
 from words import Words
 from stem import Stemming
 import corpus
