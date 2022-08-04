@@ -1,7 +1,5 @@
 import json
-from sentences import Sentences
 from words import Words
-from punctuation import Punctuation
 from stem import Stemming
 import corpus
 
@@ -9,6 +7,7 @@ import corpus
 st = corpus.stemming()
 
 tlist = []
+memo = {}
 
 with open("data.json", "r") as file:
     d = json.load(file)
@@ -27,4 +26,14 @@ for i in list(d.items()):
     stemming = Stemming(*st)
     s = stemming.load(stopfiltered)
     tlist.append(s)
-print(tlist)
+
+
+for i in tlist:
+    for j in i:
+        if j not in memo.keys():
+            triallist = []
+            for k in tlist:
+                if j in k:
+                    triallist.append(tlist.index(k))
+            memo[j] = triallist
+print(memo)
