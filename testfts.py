@@ -6,16 +6,14 @@ import corpus
 # load stemming form
 st = corpus.stemming()
 
-tlist = []
+dlist = []
 memo = {}
 
 with open("data.json", "r") as file:
     d = json.load(file)
 
-for i in list(d.items()):
-    k, v = i
-    # tokenize to words
-    w = Words(v)
+def tokenize(text):
+    w = Words(text)
     wl = w.load()
 
     # load stop words
@@ -25,15 +23,27 @@ for i in list(d.items()):
     # stemming text
     stemming = Stemming(*st)
     s = stemming.load(stopfiltered)
-    tlist.append(s)
+    return s
 
+for i in list(d.items()):
+    k, v = i
+    dlist.append(tokenize(v))
 
-for i in tlist:
+    
+for i in dlist:
     for j in i:
         if j not in memo.keys():
             triallist = []
-            for k in tlist:
+            for k in dlist:
                 if j in k:
-                    triallist.append(tlist.index(k))
+                    triallist.append(dlist.index(k))
             memo[j] = triallist
-print(memo)
+
+inp =input("text:")
+t = tokenize(inp)
+for i in t:
+    if i in memo.keys():
+        print(memo[i])
+    else:
+        print("not exist!")
+    
