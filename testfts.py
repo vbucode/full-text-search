@@ -25,29 +25,36 @@ def tokenize(text):
     s = stemming.load(stopfiltered)
     return s
 
-for i in list(d.items()):
-    k, v = i
-    dlist.append(tokenize(v))
+def indexing(arg):
+    for i in list(arg.items()):
+        k, v = i
+        dlist.append(tokenize(v))
 
-    
-for i in dlist:
-    for j in i:
-        if j not in memo.keys():
-            triallist = []
-            for k in dlist:
-                if j in k:
-                    triallist.append(dlist.index(k))
-            memo[j] = triallist
-while True:
-    nlist = []
-    klist = []
-    inp =input("text:")
-    t = tokenize(inp)
-    for i in t:
+    for i in dlist:
+        for j in i:
+            if j not in memo.keys():
+                triallist = []
+                for k in dlist:
+                    if j in k:
+                        triallist.append(dlist.index(k))
+                memo[j] = triallist
+    #return memo
+
+def fsearch(arg):
+    for i in arg:
         if i in memo.keys():
             nlist.append(memo[i])
 
     for i in nlist:
         for j in i:
             klist.append(j)
-    print(dlist[max(set(klist), key = lambda x: klist.count(x))])
+    return dlist[max(set(klist), key = lambda x: klist.count(x))]
+
+din = indexing(d)
+
+while True:
+    nlist = []
+    klist = []
+    inp =input("text:")
+    t = tokenize(inp)
+    print(fsearch(t))
