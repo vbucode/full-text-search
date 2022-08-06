@@ -38,7 +38,6 @@ def indexing(arg):
                     if j in k:
                         triallist.append(dlist.index(k))
                 memo[j] = triallist
-    #return memo
 
 def fsearch(arg):
     for i in arg:
@@ -50,7 +49,7 @@ def fsearch(arg):
             klist.append(j)
     return dlist[max(set(klist), key = lambda x: klist.count(x))]
 
-din = indexing(d)
+indexing(d)
 
 while True:
     nlist = []
